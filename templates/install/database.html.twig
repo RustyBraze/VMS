@@ -1,0 +1,44 @@
+{% extends 'install/base_install.html.twig' %}
+
+{% block content %}
+    <form method="post">
+        {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+
+        <div class="mb-3">
+            <label class="form-label">Database Type</label>
+            <select name="db_type" class="form-control">
+                <option value="mysql">MySQL</option>
+                <option value="pgsql">PostgreSQL</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Host</label>
+            <input type="text" name="db_host" class="form-control" value="127.0.0.1" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Port</label>
+            <input type="number" name="db_port" class="form-control" value="3306" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Database Name</label>
+            <input type="text" name="db_name" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input type="text" name="db_user" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" name="db_pass" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Next →</button>
+    </form>
+{% endblock %}

@@ -43,6 +43,7 @@ class Location
 
     public function __construct()
     {
+        $this->uuid = Uuid::v4();
         $this->shifts = new ArrayCollection();
     }
 

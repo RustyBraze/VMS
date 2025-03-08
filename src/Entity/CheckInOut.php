@@ -32,6 +32,12 @@ class CheckInOut
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $check_out_time = null;
 
+    public function __construct()
+    {
+        $this->check_in_time = new \DateTime();
+//        $this->check_out_time = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

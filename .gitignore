@@ -1,3 +1,5 @@
+# Temp limitation - to be removed later
+.env
 
 ###> symfony/framework-bundle ###
 /.env.local

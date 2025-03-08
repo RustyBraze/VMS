@@ -1,0 +1,47 @@
+{% extends 'install/base_install.html.twig' %}
+
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label class="form-label">Project Name</label>
+            <input type="text" name="project_name" class="form-control" value="Volunteer Management System" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Short Name</label>
+            <input type="text" name="short_name" class="form-control" value="VMS" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Volunteer Term</label>
+            <input type="text" name="volunteer_label" class="form-control" value="Volunteer" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Staff Term</label>
+            <input type="text" name="staff_label" class="form-control" value="Staff" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Department Head Term</label>
+            <input type="text" name="department_head_label" class="form-control" value="Department Head" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Shift Manager Term</label>
+            <input type="text" name="shift_manager_label" class="form-control" value="Shift Manager" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Upload Logo</label>
+            <input type="file" name="logo" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Upload Favicon</label>
+            <input type="file" name="favicon" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Next →</button>
+    </form>
+{% endblock %}

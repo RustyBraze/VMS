@@ -41,6 +41,8 @@ class Department
     public function __construct()
     {
         $this->shiftTypes = new ArrayCollection();
+        $this->uuid = Uuid::v4();
+        $this->is_internal = false;
     }
 
     public function getId(): ?int

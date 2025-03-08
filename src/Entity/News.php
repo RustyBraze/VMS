@@ -31,6 +31,11 @@ class News
     #[ORM\Column(enumType: NewsVisibleEnum::class)]
     private ?NewsVisibleEnum $visible_to = null;
 
+    public function __construct()
+    {
+        $this->uuid = Uuid::v4();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
