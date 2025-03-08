@@ -1,0 +1,3 @@
+# Docs area
+
+Well... documentation of the project...
