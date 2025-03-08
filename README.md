@@ -95,7 +95,7 @@ We appreciate your support in maintaining the integrity of the VMS project. If y
 ## 📬 Contact & Support
 For questions, suggestions, or bug reports, feel free to open an issue or reach out via:
 
-📧 Email: TBD
+📧 Email: TBD<br>
 💬 Community Chat: TDB
 
 ---
