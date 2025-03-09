@@ -23,7 +23,7 @@
     <div class="wizard-container">
         <h2 class="wizard-header">{{ title }}</h2>
         <div class="progress">
-            <div class="progress-bar" role="progressbar" style="width: {{ (progress * 100) / progress_max }}%;" aria-valuenow="{{ progress }}" aria-valuemin="{{ progress_min }}" aria-valuemax="{{ progress_max }}"></div>
+            <div class="progress-bar" role="progressbar" style="width: {{ (progress * 100) / progress_max }}%;" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="{{ progress_max }}"></div>
         </div>
         <hr>
         {% block content %}{% endblock %}

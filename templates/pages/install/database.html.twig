@@ -1,46 +1,68 @@
 {% extends 'pages/install/base_template.html.twig' %}
 
 {% block content %}
-    <form method="post">
+    <form method="post" class="row g-3">
         {% if error %}
             <div class="alert alert-danger">{{ error }}</div>
         {% endif %}
 
-        <div class="mb-3">
+
+        {# First Group #}
+        {# DATABASE TYPE #}
+        <div class="col-md-3">
             <label class="form-label">Database Type</label>
-            <select name="db_type" class="form-control">
-                <option value="mysql">MySQL</option>
+            <select name="db_type" class="form-select">
                 <option value="pgsql">PostgreSQL</option>
+                <option value="mysql">MySQL</option>
             </select>
         </div>
 
-        <div class="mb-3">
+        {# DATABASE HOST #}
+        <div class="col-md-7">
             <label class="form-label">Host</label>
             <input type="text" name="db_host" class="form-control" value="127.0.0.1" required>
         </div>
 
-        <div class="mb-3">
+        {# DATABASE PORT #}
+        <div class="col-md-2">
             <label class="form-label">Port</label>
-            <input type="number" name="db_port" class="form-control" value="3306" required>
+            <input type="number" name="db_port" class="form-control" value="5432" required>
         </div>
+        {# END of First Group #}
 
-        <div class="mb-3">
-            <label class="form-label">Database Name</label>
-            <input type="text" name="db_name" class="form-control" required>
-        </div>
 
-        <div class="mb-3">
+        {# Second Group #}
+        <div class="col-md-6">
             <label class="form-label">Username</label>
             <input type="text" name="db_user" class="form-control" required>
         </div>
 
-        <div class="mb-3">
+        <div class="col-md-6">
             <label class="form-label">Password</label>
-            <input type="password" name="db_pass" class="form-control">
+            <input type="password" name="db_pass" class="form-control" required>
         </div>
+        {# END Second Group #}
 
-        <button type="submit" class="btn btn-primary">Next →</button>
+
+        {# Third Group #}
+        <div class="col-md-12">
+            <label class="form-label">Database Name</label>
+            <input type="text" name="db_name" class="form-control" required>
+        </div>
+        {# END Third Group #}
+
+
+{#        <button type="submit" class="btn btn-primary">Next →</button>#}
+
+{#        <div class="col-md-12">#}
+            <button class="btn btn-primary" type="submit">Next</button>
+{#        </div>#}
+
     </form>
+
+
+
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {

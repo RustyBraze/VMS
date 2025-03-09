@@ -24,29 +24,26 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
  */
 class InstallController extends AbstractController
 {
-    #[Route('/install/{step}', name: 'app_install', defaults: ["step" => 1])]
+    private $wizardStepsTotal = 5;
+    private $wizardActualStep = 0;
+
+
+    #[Route('/install/{step}', name: 'app_install', defaults: ["step" => 0])]
     public function install(int $step, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
+        // We can only show the installer if we have the file: install.new in the root folder
         $rootPath = $this->getParameter('kernel.project_dir');
         $filesystem = new Filesystem();
 
-        if (!$filesystem->exists($rootPath . '/installed')) {
+        if (!$filesystem->exists($rootPath . '/install.new')) {
             return $this->redirectToRoute('app_home');
         }
 
+        $this->wizardActualStep = $step;
+
         switch ($step) {
             case 0:
-                // Page items that need to be loaded/set
-                $page_content = [
-                    'title' => 'Welcome',
-                    'progress' => 0,
-                    'progress_min' => 0,
-                    'progress_max' => 5,
-                ];
-                return $this->render(view: 'pages/install/welcome.html.twig',
-                    parameters: $page_content
-                );
-
+                return $this->handleWelcome($request);
             case 1:
                 return $this->handleDatabaseSetup($request, $rootPath);
             case 2:
@@ -56,13 +53,44 @@ class InstallController extends AbstractController
             case 4:
                 return $this->saveConfiguration($entityManager);
             case 5:
-                $filesystem->remove($rootPath . '/installed');
+//                $filesystem->remove($rootPath . '/installed');
+                $filesystem->rename(origin: $rootPath . '/install.new', target: $rootPath . '/install.done', overwrite: true);
                 return $this->redirectToRoute('app_home');
         }
 
-        return $this->redirectToRoute('app_install', ['step' => 1]);
+        // Fallback to zero - welcome screen
+        return $this->redirectToRoute('app_install', ['step' => 0]);
     }
 
+
+    // *************************************************************************
+    // STEP - WELCOME
+    // *************************************************************************
+    private function handleWelcome(Request $request): Response
+    {
+        if ($request->isMethod('POST')) {
+            return $this->redirectToRoute(
+                route:'app_install',
+                parameters: ['step' => ($this->wizardActualStep + 1)]
+            );
+        }
+
+        // Page items that need to be loaded/set
+        $page_content = [
+            'title' => 'Welcome',
+            'progress' => $this->wizardActualStep,
+            'progress_max' => $this->wizardStepsTotal
+        ];
+        return $this->render(
+            view: 'pages/install/welcome.html.twig',
+            parameters: $page_content
+        );
+    }
+
+
+    // *************************************************************************
+    // STEP - DATABASE SETUP
+    // *************************************************************************
     private function handleDatabaseSetup(Request $request, string $rootPath): Response
     {
         $errorMessage = null;
@@ -77,34 +105,41 @@ class InstallController extends AbstractController
 
             $dsn = "$dbType:host=$dbHost;port=$dbPort;dbname=$dbName";
 
-            try {
-                new \PDO($dsn, $dbUser, $dbPass);
-
-                $configContent = <<<EOL
-DATABASE_URL="{$dbType}://{$dbUser}:{$dbPass}@{$dbHost}:{$dbPort}/{$dbName}"
-EOL;
-
-                file_put_contents($rootPath . '/.env.local', $configContent);
-
-                return $this->redirectToRoute('app_install', ['step' => 2]);
-
-            } catch (\Exception $e) {
-                $errorMessage = "Database connection failed: " . $e->getMessage();
-            }
+//            try {
+//                new \PDO($dsn, $dbUser, $dbPass);
+//
+//                $configContent = <<<EOL
+//DATABASE_URL="{$dbType}://{$dbUser}:{$dbPass}@{$dbHost}:{$dbPort}/{$dbName}"
+//EOL;
+//
+//                file_put_contents($rootPath . '/.env.local', $configContent);
+//
+                return $this->redirectToRoute(
+                    route:'app_install',
+                    parameters: ['step' => ($this->wizardActualStep + 1)]
+                );
+//
+//            } catch (\Exception $e) {
+//                $errorMessage = "Database connection failed: " . $e->getMessage();
+//            }
         }
+
         // Page items that need to be loaded/set
         $page_content = [
             'title' => 'Database Setup',
-            'progress' => 1,
-            'progress_min' => 1,
-            'progress_max' => 5,
+            'progress' => $this->wizardActualStep,
+            'progress_max' => $this->wizardStepsTotal,
             'error' => $errorMessage
         ];
-        return $this->render(view: 'pages/install/database.html.twig',
+        return $this->render(
+            view: 'pages/install/database.html.twig',
             parameters: $page_content
         );
     }
 
+    // *************************************************************************
+    // STEP - Administrative Account creation
+    // *************************************************************************
     private function handleAdminCreation(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
         if ($request->isMethod('POST')) {
@@ -120,21 +155,27 @@ EOL;
 //            $entityManager->persist($admin);
 //            $entityManager->flush();
 
-            return $this->redirectToRoute('app_install', ['step' => 3]);
+            return $this->redirectToRoute(
+                route:'app_install',
+                parameters: ['step' => ($this->wizardActualStep + 1)]
+            );
         }
 
         // Page items that need to be loaded/set
         $page_content = [
             'title' => 'Account Setup',
-            'progress_min' => 1,
-            'progress_max' => 5,
-            'progress' => 3
+            'progress' => $this->wizardActualStep,
+            'progress_max' => $this->wizardStepsTotal
         ];
-        return $this->render(view: 'pages/install/admin.html.twig',
+        return $this->render(
+            view: 'pages/install/admin_account.html.twig',
             parameters: $page_content
         );
     }
 
+    // *************************************************************************
+    // STEP - Basic configuration
+    // *************************************************************************
     private function handleBaseConfiguration(Request $request): Response
     {
         if ($request->isMethod('POST')) {
@@ -149,35 +190,45 @@ EOL;
                 'favicon' => $request->files->get('favicon') ?: 'assets/images/default_fav.png',
             ];
 
-            file_put_contents($this->getParameter('kernel.project_dir') . '/config/global_config.json', json_encode($config));
+//            file_put_contents($this->getParameter('kernel.project_dir') . '/config/global_config.json', json_encode($config));
 
-            return $this->redirectToRoute('app_install', ['step' => 4]);
+            return $this->redirectToRoute(
+                route:'app_install',
+                parameters: ['step' => ($this->wizardActualStep + 1)]
+            );
         }
 
         // Page items that need to be loaded/set
         $page_content = [
             'title' => 'Configuration',
-            'progress_min' => 1,
-            'progress_max' => 5,
-            'progress' => 4
+            'progress' => $this->wizardActualStep,
+            'progress_max' => $this->wizardStepsTotal
         ];
-        return $this->render(view: 'pages/install/configuration.html.twig',
+        return $this->render(
+            view: 'pages/install/configuration.html.twig',
             parameters: $page_content
         );
     }
 
+    // *************************************************************************
+    // STEP - Save all configurations to disk and database
+    // *************************************************************************
     private function saveConfiguration(EntityManagerInterface $entityManager): Response
     {
-        $config = json_decode(file_get_contents($this->getParameter('kernel.project_dir') . '/config/global_config.json'), true);
+//        $config = json_decode(file_get_contents($this->getParameter('kernel.project_dir') . '/config/global_config.json'), true);
 
-        foreach ($config as $key => $value) {
-            $setting = new SystemConfiguration();
-            $setting->setKey($key);
-            $setting->setValue($value);
-            $entityManager->persist($setting);
-        }
+//        foreach ($config as $key => $value) {
+//            $setting = new SystemConfiguration();
+//            $setting->setKey($key);
+//            $setting->setValue($value);
+//            $entityManager->persist($setting);
+//        }
+//
+//        $entityManager->flush();
 
-        $entityManager->flush();
-        return $this->redirectToRoute('app_install', ['step' => 5]);
+        return $this->redirectToRoute(
+            route:'app_install',
+            parameters: ['step' => ($this->wizardActualStep + 1)]
+        );
     }
 }
