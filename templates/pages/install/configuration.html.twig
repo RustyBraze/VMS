@@ -1,47 +1,57 @@
 {% extends 'pages/install/base_template.html.twig' %}
 
 {% block content %}
-    <form method="post" enctype="multipart/form-data">
-        <div class="mb-3">
-            <label class="form-label">Project Name</label>
-            <input type="text" name="project_name" class="form-control" value="Volunteer Management System" required>
+
+    <p>Basic Configuration for the application to properly work.</p>
+
+    <form method="post" enctype="multipart/form-data" class="row g-3">
+        <div class="form-floating col-md-9">
+            <input type="text" name="project_name" class="form-control" id="floatingProjectName" placeholder="Volunteer Management System" value="Volunteer Management System" required>
+            <label for="floatingProjectName">Website Name:</label>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Short Name</label>
-            <input type="text" name="short_name" class="form-control" value="VMS" required>
+        <div class="form-floating col-md-3">
+            <input type="text" name="short_name" class="form-control" id="floatingShortName" placeholder="VMS" value="VMS" required>
+            <label for="floatingShortName">Short Name:</label>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Volunteer Term</label>
-            <input type="text" name="volunteer_label" class="form-control" value="Volunteer" required>
+
+        <div class="col-md-12">
+            <strong>Terms used in the website:</strong> (Translation not supported)
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Staff Term</label>
-            <input type="text" name="staff_label" class="form-control" value="Staff" required>
+
+        <div class="form-floating col-md-3">
+            <input type="text" name="volunteer_name" class="form-control" id="floatingVolunteerName" placeholder="Volunteer" value="Volunteer" required>
+            <label for="floatingVolunteerName">Volunteer is called:</label>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Department Head Term</label>
-            <input type="text" name="department_head_label" class="form-control" value="Department Head" required>
+        <div class="form-floating col-md-3">
+            <input type="text" name="staff_name" class="form-control" id="floatingStaffName" placeholder="Staff" value="Staff" required>
+            <label for="floatingStaffName">Staff is called:</label>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Shift Manager Term</label>
-            <input type="text" name="shift_manager_label" class="form-control" value="Shift Manager" required>
+        <div class="form-floating col-md-3">
+            <input type="text" name="department_head_name" class="form-control" id="floatingDepartmentHeadName" placeholder="Department Head" value="Department Head" required>
+            <label for="floatingDepartmentHeadName">Department Head is called:</label>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Upload Logo</label>
-            <input type="file" name="logo" class="form-control">
+        <div class="form-floating col-md-3">
+            <input type="text" name="shift_manager_name" class="form-control" id="floatingShiftManagerName" placeholder="Shift Manager" value="Shift Manager" required>
+            <label for="floatingShiftManagerName">Shift Manager is called:</label>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Upload Favicon</label>
-            <input type="file" name="favicon" class="form-control">
-        </div>
+{# TODO: DO THIS THING HERE and allow branding from install#}
+{#        <div class="mb-3">#}
+{#            <label class="form-label">Upload Logo</label>#}
+{#            <input type="file" name="logo" class="form-control">#}
+{#        </div>#}
 
-        <button type="submit" class="btn btn-primary">Next →</button>
+{#        <div class="mb-3">#}
+{#            <label class="form-label">Upload Favicon</label>#}
+{#            <input type="file" name="favicon" class="form-control">#}
+{#        </div>#}
+
+        <button type="submit" class="btn btn-primary">Next</button>
     </form>
 {% endblock %}
