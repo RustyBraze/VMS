@@ -1,0 +1,2 @@
+msgid "ui.general.add"
+msgstr "Add"

@@ -15,6 +15,13 @@ use Symfony\Component\Routing\Attribute\Route;
 //use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+/**
+ * Handles the installation process of the application.
+ *
+ * The install method orchestrates different installation steps based on the
+ * provided step parameter. These steps involve database setup, admin account
+ * creation, configuration updates, and saving the final configuration.
+ */
 class InstallController extends AbstractController
 {
     #[Route('/install/{step}', name: 'app_install', defaults: ["step" => 1])]
@@ -28,6 +35,18 @@ class InstallController extends AbstractController
         }
 
         switch ($step) {
+            case 0:
+                // Page items that need to be loaded/set
+                $page_content = [
+                    'title' => 'Welcome',
+                    'progress' => 0,
+                    'progress_min' => 0,
+                    'progress_max' => 5,
+                ];
+                return $this->render(view: 'pages/install/welcome.html.twig',
+                    parameters: $page_content
+                );
+
             case 1:
                 return $this->handleDatabaseSetup($request, $rootPath);
             case 2:
@@ -73,8 +92,17 @@ EOL;
                 $errorMessage = "Database connection failed: " . $e->getMessage();
             }
         }
-        //TODO: Fix this shit - make the vars externally to be populated and then sent to hell
-        return $this->render('install/database.html.twig', ['title' => 'aaaaaaaaaaaaaa', 'progress' => 1, 'error' => $errorMessage]);
+        // Page items that need to be loaded/set
+        $page_content = [
+            'title' => 'Database Setup',
+            'progress' => 1,
+            'progress_min' => 1,
+            'progress_max' => 5,
+            'error' => $errorMessage
+        ];
+        return $this->render(view: 'pages/install/database.html.twig',
+            parameters: $page_content
+        );
     }
 
     private function handleAdminCreation(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
@@ -95,7 +123,16 @@ EOL;
             return $this->redirectToRoute('app_install', ['step' => 3]);
         }
 
-        return $this->render('install/admin.html.twig');
+        // Page items that need to be loaded/set
+        $page_content = [
+            'title' => 'Account Setup',
+            'progress_min' => 1,
+            'progress_max' => 5,
+            'progress' => 3
+        ];
+        return $this->render(view: 'pages/install/admin.html.twig',
+            parameters: $page_content
+        );
     }
 
     private function handleBaseConfiguration(Request $request): Response
@@ -117,7 +154,16 @@ EOL;
             return $this->redirectToRoute('app_install', ['step' => 4]);
         }
 
-        return $this->render('install/configuration.html.twig');
+        // Page items that need to be loaded/set
+        $page_content = [
+            'title' => 'Configuration',
+            'progress_min' => 1,
+            'progress_max' => 5,
+            'progress' => 4
+        ];
+        return $this->render(view: 'pages/install/configuration.html.twig',
+            parameters: $page_content
+        );
     }
 
     private function saveConfiguration(EntityManagerInterface $entityManager): Response

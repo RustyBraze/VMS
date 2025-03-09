@@ -1,6 +1,19 @@
 {
     "type": "project",
-    "license": "proprietary",
+    "license": "MIT",
+    "homepage": "https://github.com/RustyBraze/VMS",
+    "authors": [
+        {
+            "name": "Rusty Braze",
+            "homepage": "https://github.com/RustyBraze/VMS",
+            "role": "developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/RustyBraze/VMS",
+        "sources": "https://github.com/RustyBraze/VMS",
+        "docs": "https://github.com/RustyBraze/VMS"
+    },
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
@@ -25,6 +38,7 @@
         "symfony/runtime": "7.2.*",
         "symfony/security-bundle": "7.2.*",
         "symfony/serializer": "7.2.*",
+        "symfony/translation": "7.2.*",
         "symfony/twig-bundle": "7.2.*",
         "symfony/uid": "7.2.*",
         "symfony/validator": "7.2.*",

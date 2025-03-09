@@ -1,4 +1,4 @@
-{% extends 'install/base_install.html.twig' %}
+{% extends 'pages/install/base_template.html.twig' %}
 
 {% block content %}
     <form method="post">
@@ -41,4 +41,26 @@
 
         <button type="submit" class="btn btn-primary">Next →</button>
     </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dbTypeSelector = document.querySelector('select[name="db_type"]');
+            const dbPortInput = document.querySelector('input[name="db_port"]');
+
+            const defaultPorts = {
+                'mysql': 3306,
+                'pgsql': 5432,
+            };
+
+            dbTypeSelector.addEventListener('change', function () {
+                const selectedDbType = dbTypeSelector.value;
+
+                // Update the port field based on the selected database type
+                if (defaultPorts[selectedDbType]) {
+                    dbPortInput.value = defaultPorts[selectedDbType];
+                }
+            });
+        });
+    </script>
+
 {% endblock %}

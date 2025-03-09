@@ -3,6 +3,12 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+#    type: annotation
+#    prefix: /{_locale}
+#    requirements:
+#        _locale: en|de
+
+# TODO: FIX TRANSLATION STUFF / ROUTE / Annotation
 
 #app_install:
 #    path: /install/{step}
