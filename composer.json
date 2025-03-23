@@ -25,27 +25,44 @@
         "doctrine/doctrine-bundle": "^2.13.2",
         "doctrine/doctrine-migrations-bundle": "^3.4.1",
         "doctrine/orm": "^3.3.2",
+        "phpdocumentor/reflection-docblock": "^5.6.1",
+        "phpstan/phpdoc-parser": "^2.1",
         "symfony/asset": "7.2.*",
+        "symfony/asset-mapper": "7.2.*",
         "symfony/console": "7.2.*",
+        "symfony/doctrine-messenger": "7.2.*",
         "symfony/dotenv": "7.2.*",
         "symfony/expression-language": "7.2.*",
         "symfony/flex": "^2.5",
         "symfony/form": "7.2.*",
         "symfony/framework-bundle": "7.2.*",
         "symfony/http-client": "7.2.*",
-        "symfony/maker-bundle": "^1.62.1",
-        "symfony/password-hasher": "7.2.*",
+        "symfony/intl": "7.2.*",
+        "symfony/mailer": "7.2.*",
+        "symfony/mime": "7.2.*",
+        "symfony/monolog-bundle": "^3.10",
+        "symfony/notifier": "7.2.*",
+        "symfony/process": "7.2.*",
+        "symfony/property-access": "7.2.*",
+        "symfony/property-info": "7.2.*",
         "symfony/runtime": "7.2.*",
         "symfony/security-bundle": "7.2.*",
         "symfony/serializer": "7.2.*",
+        "symfony/stimulus-bundle": "^2.23",
+        "symfony/string": "7.2.*",
         "symfony/translation": "7.2.*",
         "symfony/twig-bundle": "7.2.*",
         "symfony/uid": "7.2.*",
+        "symfony/ux-turbo": "^2.23",
         "symfony/validator": "7.2.*",
+        "symfony/web-link": "7.2.*",
         "symfony/yaml": "7.2.*",
-        "twbs/bootstrap-icons": "^1.11",
         "twig/extra-bundle": "^2.12|^3.20",
-        "twig/twig": "^2.12|^3.20"
+        "twig/twig": "^2.12|^3.20",
+        "symfony/maker-bundle": "^1.62.1",
+        "symfony/password-hasher": "7.2.*",
+        "twbs/bootstrap-icons": "^1.11.3"
+
     },
     "config": {
         "allow-plugins": {
@@ -79,7 +96,8 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+            "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "importmap:install": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

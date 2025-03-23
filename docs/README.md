@@ -1,5 +1,13 @@
 # Documents Area
 
+Always use the K.I.S.S Principle. (Keep It Simple Stupid)
+
+Quote
+```text
+If an “If Statement” can do the work efficiently, you don’t need a machine Learning model.
+-- Joy Utosu Obiukwu
+```
+
 ## Guides
 
 Quick tutorials.
