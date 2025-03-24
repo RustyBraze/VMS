@@ -1,6 +1,31 @@
 # DB and Entities
 
-**Important:** Every timestamp must be with Time Zone included 
+<!-- TOC -->
+* [DB and Entities](#db-and-entities)
+  * [Templates](#templates)
+    * [Contact List](#contact-list)
+  * [**Entity:** System Configuration (`SystemConfiguration`)](#entity-system-configuration-systemconfiguration)
+  * [**Entity:** Languages (`Languages`)](#entity-languages-languages)
+  * [**Entity:** Departments (`Departments`)](#entity-departments-departments)
+  * [**Entity:** Requirements (`Requirements`)](#entity-requirements-requirements)
+  * [**Location Entity (`Location`)**](#location-entity-location)
+    * [**Location Fields**](#location-fields)
+  * [**User Entity (`User`)**](#user-entity-user)
+    * [**User Fields**](#user-fields)
+  * [**4. Shift Type Entity (`ShiftType`)**](#4-shift-type-entity-shifttype)
+    * [**Shift Type Fields**](#shift-type-fields)
+  * [**5. Shift Entity (`Shift`)**](#5-shift-entity-shift)
+    * [**Shift Fields**](#shift-fields)
+  * [**6. Shift Application Entity (`ShiftApplication`)**](#6-shift-application-entity-shiftapplication)
+    * [**Shift Application Fields**](#shift-application-fields)
+  * [**7. Check-In/Check-Out Entity (`CheckInOut`)**](#7-check-incheck-out-entity-checkinout)
+    * [**Check-In/Out Fields**](#check-inout-fields)
+  * [**8. News & Meetings Entity (`News`)**](#8-news--meetings-entity-news)
+    * [**News Fields**](#news-fields)
+<!-- TOC -->
+
+
+**Important:** Every timestamp must be with Time Zone included
 
 ## Templates
 
@@ -19,7 +44,7 @@
 ]
 ```
 
-
+---
 
 ## **Entity:** System Configuration (`SystemConfiguration`)
 
@@ -34,7 +59,76 @@ Stores the application configuration. The configuration is then exported to a fi
 
 Minimum Parameters required for the application:
 
-TODO: Add here the table with the minimum parameters required
+**TODO: Add here the table with the minimum parameters required**
+
+| Variable                    | Default Value                 | Description                                                                                     |
+|-----------------------------|-------------------------------|-------------------------------------------------------------------------------------------------|
+| system.hostname             | `localhost`                   | Hostname where the application is hosted - It is used in the URL                                |
+| system.base_url             | `/`                           | Base URL - Usually is /                                                                         |
+| system.logo.fav             | `fav.png`                     | Favorite Icon                                                                                   |
+| system.logo.main            | `vms_logo_main.png`           | Main Logo of the website                                                                        |
+| system.logo.header          | `vms_logo_header.png`         | Header Logo                                                                                     |
+| system.version              | `1.0`                         |                                                                                                 |
+| system.maintenance_mode     | `false`                       | Forces the system to show maintenance mode when opening the page<br/>Does not affect admin area |
+| name.project                | `Volunteer Management System` | Application Name                                                                                |
+| name.short                  | `VMS`                         | Short Name of the application                                                                   |
+| name.volunteer              | `Volunteer`                   | How the Volunteer shall be named                                                                |
+| name.volunteer.plural       | `Volunteers`                  | How the Volunteers shall be named (Plural)                                                      |
+| name.staff                  | `Staff`                       | How the Staff shall be named                                                                    |
+| name.staff.plural           | `Staff`                       | How the Staffs shall be named (Plural)                                                          |
+| name.department_head        | `Department Head`             | How the Department Head shall be named                                                          |
+| name.department_head.plural | `Department Heads`            | How the Department Heads shall be named (Plural)                                                |
+| name.shift_manager          | `Shift Manager`               | How the Shift Manager shall be named                                                            |
+| name.shift_manager.plural   | `Shift Manageres`             | How the Shift Manager shall be named                                                            |
+| name.goodie                 | `Reward`                      | How Goodie shall be named                                                                       |
+| name.goodie.plural          | `Rewards`                     | How Goodies shall be named (Plural)                                                             |
+| name.reputation             | `Reputation`                  | How the reputation system shall be called                                                       |
+| default.theme               | `1`                           |                                                                                                 |
+| default.language            | `en`                          |                                                                                                 |
+| system.environment          | `dev`                         | Type of the system deployed - DEV/PROD                                                          |
+| email_driver                | ``                            |                                                                                                 |
+| email_from_name             | ``                            |                                                                                                 |
+| email_from_email            | ``                            |                                                                                                 |
+| email.host                  | ``                            |                                                                                                 |
+| email.port                  | ``                            |                                                                                                 |
+| email.tsl                   | ``                            |                                                                                                 |
+| email.username              | ``                            |                                                                                                 |
+| email.password              | ``                            |                                                                                                 |
+| enable.registration         | ``                            |                                                                                                 |
+| enable.password_reset       | ``                            |                                                                                                 |
+| enable.login_normal         | ``                            |                                                                                                 |
+| password.min                | ``                            | Minimum lenght for the password                                                                 |
+| password.req_upper          | ``                            | Requires Upper case                                                                             |
+| password.req_upper.min      | ``                            | Minimum count                                                                                   |
+| password.req_lower          | ``                            | Requires Lower case                                                                             |
+| password.req_lower.min      | ``                            | Minimum count                                                                                   |
+| password.req_number         | ``                            | Requires Numbers                                                                                |
+| password.req_number.min     | ``                            | Minimum count                                                                                   |
+| password.req_special        | ``                            | Requires Special Caracters                                                                      |
+| password.req_special.min    | ``                            | Minimum count                                                                                   |
+| shift.                      | ``                            |                                                                                                 |
+| shift.                      | ``                            |                                                                                                 |
+| shift.                      | ``                            |                                                                                                 |
+| shift.                      | ``                            |                                                                                                 |
+| shift.                      | ``                            |                                                                                                 |
+| policy.                     | ``                            |                                                                                                 |
+| policy.                     | ``                            |                                                                                                 |
+| policy.                     | ``                            |                                                                                                 |
+| policy.                     | ``                            |                                                                                                 |
+| policy.                     |                               |                                                                                                 |                                                                                                 |                                                                                                 |
+| goodies.                    | ``                            |                                                                                                 |
+| goodies.                    | ``                            |                                                                                                 |
+| goodies.                    | ``                            |                                                                                                 |
+| goodies.                    | ``                            |                                                                                                 |
+| goodies.                    | ``                            |                                                                                                 |
+|                             | ``                            |                                                                                                 |
+|                             | ``                            |                                                                                                 |
+|                             | ``                            |                                                                                                 |
+|                             | ``                            |                                                                                                 |
+|                             | ``                            |                                                                                                 |
+|                             | ``                            |                                                                                                 |
+
+
 
 ---
 
@@ -74,7 +168,7 @@ Initial language Support: (The table is wrong and needs to be updated)
 
 ---
 
-## **Entity:** Department (`Departments`)
+## **Entity:** Departments (`Departments`)
 
 Departments organize shifts and staff.
 
@@ -95,6 +189,34 @@ External Connections:
 |-------------|-------|-------------|----------------------------------------------|
 | `LOCATIONS` | `FK`  |             | EXTERNAL - LOCATIONS where the department is |
 | `MEMBERS`   | `FK`  |             | EXTERNAL - Users that are members            |
+
+---
+
+## **Entity:** Requirements (`Requirements`)
+
+| Field Name          | Type          | Constraints        | Description                                                                                                                                        |
+|---------------------|:--------------|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| `id`                | `INTEGER`     | `Primary Key`      | Internal ID                                                                                                                                        |
+| `uuid`              | `GUID`        | `UNIQUE, NOT NULL` | Internal UUID                                                                                                                                      |
+| `type`              | `INTEGER`     | `NOT NULL`         | 0 = Internal / 1 = External / 2 = BOTH (MIX)                                                                                                       |
+| `confirmation_type` | `INTEGER`     | `NOT NULL`         | 0 = No Need (Self)<br/>1 = Yes - By Training Responsible<br/>2 = Yes - By Department (ID)<br/>3 = Yes - By Location (ID)<br/>4 = Yes - Custom text |
+| `confirmation_text` | `TEXT`        |                    |                                                                                                                                                    |
+| `confirmation_ID`   | `INTEGER`     | `NOT NULL`         |                                                                                                                                                    |
+| `valid_for`         | `INTEGER`     | `NOT NULL`         | 0 = Event<br/>1 = Year<br/>2 = Life Time                                                                                                           |
+| `name`              | `string(255)` | `NOT NULL`         | Requirement Name                                                                                                                                   |
+| `description`       | `TEXT`        |                    | Markdown description                                                                                                                               |
+| `flag_active`       | `BOOLEAN`     | `NOT NULL`         | False = Requirement is disbled<br/>True = Active/Enabled                                                                                           |
+| `flag_staff_only`   | `BOOLEAN`     | `NOT NULL`         | False = Everyone<br/>True = Only Staff                                                                                                             |
+| `training_ID`       | `INTEGER`     | FK                 | Connected to a training - consider the option of several trainings                                                                                 |
+| `created_at`        | `datetimetz`  | `NOT NULL`         |                                                                                                                                                    |
+| `updated_at`        | `datetimetz`  | `NOT NULL`         |                                                                                                                                                    |
+
+---
+
+
+
+
+
 
 
 
@@ -127,19 +249,6 @@ Tracks event venues and shift locations.
 | `contact_list`   | `JSON`         | `NULLABLE`                    | List of contact persons (name, telegram, phone) |
 | `updated_at`     | `DATETIMETZ`   | `CURRENT_TIMESTAMP, NOT NULL` | Last update time                                |
 
-Contact list JSON template:
-
-```json
-[
-    {
-        "name" : "Contact name",
-        "comment" : "Available between 10:00 and 15:00",
-        "telegram" : "@telegramhandleoftheuser",
-        "phone" : "+49 000 0000-0000",
-        "email" : "contactemail@invalid_email.xxx"
-    }
-]
-```
 
 ---
 
